@@ -4,5 +4,33 @@
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 
-<h2>Index</h2>
+@model AISET.Models.RegisterModels
+
+<div class="panel panel-primary">
+
+    <div class="panel-body">
+
+        <div>
+
+            <ol class="step-indicator">
+                <li ng-repeat="m in StepList  track by $index" class="{{m.current_class}}">
+                    <div class="step"><i class="{{m.icon_class}}"></i></div>
+                    <div class="caption hidden-xs hidden-sm">
+
+                        <span>{{m.title}}</span>
+                    </div>
+                </li>
+
+
+            </ol>
+
+
+         
+
+
+
+        </div>
+    </div>
+</div>
+
 

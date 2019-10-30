@@ -145,8 +145,8 @@
                 <div class="profile-menu toggled">
                     <a href="#">
                         @* <div class="profile-pic">
-                                <img id="Profile" src="~/Content/user_img.png">
-                            </div>*@
+            <img id="Profile" src="~/Content/user_img.png">
+        </div>*@
                         <div class="profile-pic">
                             <div class="c100 p5 green picuser p30">
 
@@ -157,63 +157,27 @@
                                     <div class="fill" id="f2" style="border-color: green;"></div>
                                 </div>
                             </div>
-                            <div class="showcount" style="text-align: center; padding-top: 12%; font-size: 2em;">80 %</div>
-                            <span>
-                                Profile Completed
-                            </span>
-                        </div>
-                        <div class="profile-info" style="clear: both">
 
-                            <i class="fa fa-caret-down"></i><span id="uname">@Session["FirstName"] </span>
-                            <i class="zmdi zmdi-arrow-drop-down"></i>
                         </div>
+                       
                     </a>
 
-                    <ul class="main-menu">
-                        <li>
-                            <a href="@Url.Action("MemberProfile", "Home")"><i class="zmdi zmdi-face zmdi-hc-fw"></i>View Profile</a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("ChangePassword", "Home")"><i class="fa fa-key fa-fw"></i>Change Password</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-
-                            <a href="@Url.Action("Login", "Home")"><i class="fa fa-sign-out fa-fw"></i>Log Out</a>
-                        </li>
-
-                    </ul>
+                    
                 </div>
 
                 <ul class="main-menu">
+                   
+
                     <li class="active">
-                        <a href="@Url.Action("DashBoard", "Home")"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
-                    </li>
+                        <a href="@Url.Action("DashBoard", "Home")"><i class="fa fa-table"></i>Information Bulletin</a>
 
-                    <li class="sub-menu active toggled">
-                        <a href=""><i class="fa fa-table"></i>Information Bulletin</a>
-
-                        @*<ul>
-                            <li>
-                                <a href="@Url.Action("Index", "Test")"><i class="fa fa-question fa-fw"></i>&nbsp; Upcoming Test</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Completed", "Test")"><i class="fa fa-star fa-fw"></i>&nbsp; Completed Test</a>
-                            </li>
-                        </ul>*@
+                      
                     </li>
 
 
                     <li >
                         <a href="#"><i class="zmdi zmdi-view-list"></i>Syllabus</a>
-                        @*<ul style="overflow: hidden; display: none;">
-                            <li>
-                                <a href="@Url.Action("EBooks", "Home")"><i class="fa fa-book" aria-hidden="true"></i>&nbsp; E-Books</a>
-                            </li>
-                            <li class="active">
-                                <a href="@Url.Action("MyDocuments", "Home")"><i class=" fa fa-bullhorn fa-fw"></i>&nbsp; My Documents</a>
-                            </li>
-                        </ul>*@
+                       
                     </li>
 
                     <li>
@@ -229,15 +193,15 @@
                     </li>
 
                     <li>
-                        <a href="#"><i class="fa fa-cubes" aria-hidden="true"></i>AISEE - 2019 Login</a>
+                        <a href="@Url.Action("Login", "Home")"><i class="fa fa-cubes" aria-hidden="true"></i>AISEE - 2020 Login</a>
                     </li>
 
                     <li>
-                        <a href="#"><i class="fa fa-key" aria-hidden="true"></i>Forget Password</a>
+                        <a href="@Url.Action("ForgetPassword", "Home")"><i class="fa fa-key" aria-hidden="true"></i>Forget Password</a>
                     </li>
 
                     <li>
-                        <a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i>Forget Registration No.</a>
+                        <a href="@Url.Action("ForgetRegistrationNo", "Home")"><i class="fa fa-circle-o" aria-hidden="true"></i>Forget Registration No.</a>
                     </li>
 
 

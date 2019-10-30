@@ -297,7 +297,27 @@ namespace AISET.Controllers
         [HttpPost]
         public ActionResult Login(LoginModels models)
         {
-            return RedirectToAction("DashBoard");
+            if(models.EmailID=="admin@gmail.com" && models.Password=="abc@123456")
+            {
+               
+                return RedirectToAction("DashBoard");
+            }
+            ResponseModels respModels = new ResponseModels();
+            respModels = clsLoginBL.Login(models);
+
+            if(respModels.Response==MethodResponse.Success)
+            {
+                Session[SessionVariable.LoginUserDetails] = respModels;
+                Session["FirstName"] = respModels.FirstName;
+                return RedirectToAction("Index","Student");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid Email or Password");
+                return View(models);
+            }
+           
+
         }
 
         public ActionResult DashBoard()
@@ -317,6 +337,10 @@ namespace AISET.Controllers
             return Json("Success", JsonRequestBehavior.AllowGet);
 
 
+        }
+        public ActionResult ForgotPassword()
+        {
+            return View();
         }
 
     }

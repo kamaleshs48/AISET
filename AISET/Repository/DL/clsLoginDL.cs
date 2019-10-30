@@ -25,11 +25,9 @@ namespace Student.Repository.DL
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 result.Email = ds.Tables[0].Rows[0]["Email"].ToString();
-                result.UserID = Convert.ToInt32(ds.Tables[0].Rows[0]["id"].ToString());
-                result.FirstName = ds.Tables[0].Rows[0]["Name"].ToString();
-                //result.LastName = ds.Tables[0].Rows[0]["StudentLastName"].ToString();
-                result.OrgID = Convert.ToInt32(ds.Tables[0].Rows[0]["ORG_ID"].ToString());
-                result.Response = MethodResponse.Success;
+                result.UserID = Convert.ToInt32(ds.Tables[0].Rows[0]["ID"].ToString());
+                result.FirstName = ds.Tables[0].Rows[0]["FirstName"].ToString();
+                 result.Response = MethodResponse.Success;
             }
             else
             {

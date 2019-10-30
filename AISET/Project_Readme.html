@@ -1,151 +1,479 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>Your ASP.NET application</title>
-    <style>
-        body {
-            background: #fff;
-            color: #505050;
-            font: 14px 'Segoe UI', tahoma, arial, helvetica, sans-serif;
-            margin: 20px;
-            padding: 0;
-        }
+﻿USE [AISET]
+GO
+/****** Object:  Table [dbo].[tbl_StudentMaster]    Script Date: 30-10-2019 10:28:27 ******/
+DROP TABLE [dbo].[tbl_StudentMaster]
+GO
+/****** Object:  Table [dbo].[tbl_StateMaster]    Script Date: 30-10-2019 10:28:27 ******/
+DROP TABLE [dbo].[tbl_StateMaster]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_SaveUpdateRecord]    Script Date: 30-10-2019 10:28:27 ******/
+DROP PROCEDURE [dbo].[sp_SaveUpdateRecord]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Login]    Script Date: 30-10-2019 10:28:27 ******/
+DROP PROCEDURE [dbo].[sp_Login]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Login]    Script Date: 30-10-2019 10:28:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+    -- Create date: <Create Date,,>
+        -- Description:	<Description,,>
+            -- =============================================
+            CREATE PROCEDURE [dbo].[sp_Login]
+            -- Add the parameters for the stored procedure here
+            @Email nvarchar(max)=null,
+            @Password nvarchar(max)=null,
+            @Mode nvarchar(max)=null
+            AS
+            BEGIN
 
-        #header {
-            background: #efefef;
-            padding: 0;
-        }
+            IF @Mode='StudentLogin'
+            BEGIN
+            Select * from tbl_StudentMaster where Email=@Email AND Password=@Password
+            END
 
-        h1 {
-            font-size: 48px;
-            font-weight: normal;
-            margin: 0;
-            padding: 0 30px;
-            line-height: 150px;
-        }
 
-        p {
-            font-size: 20px;
-            color: #fff;
-            background: #969696;
-            padding: 0 30px;
-            line-height: 50px;
-        }
+            END
 
-        #main {
-            padding: 5px 30px;
-        }
+            GO
+            /****** Object:  StoredProcedure [dbo].[sp_SaveUpdateRecord]    Script Date: 30-10-2019 10:28:27 ******/
+            SET ANSI_NULLS ON
+            GO
+            SET QUOTED_IDENTIFIER ON
+            GO
+            -- =============================================
+            -- Author:		<Author,,Name>
+                -- Create date: <Create Date,,>
+                    -- Description:	<Description,,>
+                        -- =============================================
+                        CREATE PROCEDURE [dbo].[sp_SaveUpdateRecord]
+                        -- Add the parameters for the stored procedure here
 
-        .section {
-            width: 21.7%;
-            float: left;
-            margin: 0 0 0 4%;
-        }
+                        @ApplyingFor  varchar(max)=null
+                        ,@DOB  varchar(max)=null
+                        ,@Gender  varchar(max)=null
+                        ,@FirstName  varchar(max)=null
+                        ,@MiddleName  varchar(max)=null
+                        ,@LastName  varchar(max)=null
+                        ,@MobileNo  varchar(max)=null
+                        ,@Email  varchar(max)=null
+                        ,@ExamChoice  varchar(max)=null
+                        ,@State  varchar(max)=null
+                        ,@City  varchar(max)=null
+                        ,@IDCardType  varchar(max)=null
+                        ,@IDCardNumber  varchar(max)=null
+                        ,@ExaminationMedium  varchar(max)=null
+                        ,@CityPreference1  varchar(max)=null
+                        ,@CityPreference2  varchar(max)=null
+                        ,@CityPreference3  varchar(max)=null
+                        ,@CityPreference4  varchar(max)=null
+                        ,@_10thPassingYear  varchar(max)=null
+                        ,@_12thPassingYear  varchar(max)=null
 
-            .section h2 {
-                font-size: 13px;
-                text-transform: uppercase;
-                margin: 0;
-                border-bottom: 1px solid silver;
-                padding-bottom: 12px;
-                margin-bottom: 8px;
-            }
 
-            .section.first {
-                margin-left: 0;
-            }
+                        ,@_10thPassingBoard  varchar(max)=null
+                        ,@_12thPassingBoard  varchar(max)=null
 
-                .section.first h2 {
-                    font-size: 24px;
-                    text-transform: none;
-                    margin-bottom: 25px;
-                    border: none;
-                }
 
-                .section.first li {
-                    border-top: 1px solid silver;
-                    padding: 8px 0;
-                }
 
-            .section.last {
-                margin-right: 0;
-            }
+                        ,@_10thPassingPercentag  varchar(max)=null
+                        ,@_12thPassingPercentag  varchar(max)=null
 
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            line-height: 20px;
-        }
+                        ,@GraduationPassingYear  varchar(max)=null
+                        ,@GraduationPassingBoard  varchar(max)=null
+                        ,@GraduationPassingPercentag  varchar(max)=null
 
-        li {
-            padding: 4px 0;
-        }
 
-        a {
-            color: #267cb2;
-            text-decoration: none;
-        }
 
-            a:hover {
-                text-decoration: underline;
-            }
-    </style>
-</head>
-<body>
+                        ,@Post_GraduationPassingYear  varchar(max)=null
+                        ,@Post_GraduationPassingBoard  varchar(max)=null
+                        ,@Post_GraduationPassingPercentag  varchar(max)=null
 
-    <div id="header">
-        <h1>Your ASP.NET application</h1>
-        <p>Congratulations! You've created a project</p>
-    </div>
+                        ,@Any_OtherPassingYear  varchar(max)=null
+                        ,@Any_OtherPassingBoard  varchar(max)=null
+                        ,@Any_OtherPassingPercentag  varchar(max)=null
 
-    <div id="main">
-        <div class="section first">
-            <h2>This application consists of:</h2>
-            <ul>
-                <li>Sample pages showing basic nav between Home, About, and Contact</li>
-                <li>Theming using <a href="http://go.microsoft.com/fwlink/?LinkID=615519">Bootstrap</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615520">Authentication</a>, if selected, shows how to register and sign in</li>
-                <li>ASP.NET features managed using <a href="http://go.microsoft.com/fwlink/?LinkID=320756">NuGet</a></li>
-            </ul>
-        </div>
+                        ,@PhotographDoc  varchar(max)=null
+                        ,@SignatureDoc  varchar(max)=null
+                        ,@Marksheet10Doc  varchar(max)=null
+                        ,@Marksheet12Doc  varchar(max)=null
+                        ,@AnyotherDoc  varchar(max)=null
+                        ,@CreateDate  varchar(max)=null
+                        ,@Mode  varchar(max)=null
+                        ,@PaymentID varchar(max)=null
+                        ,@StudentID int =0
+                        AS
+                        BEGIN
+                        -- SET NOCOUNT ON added to prevent extra result sets from
+                        -- interfering with SELECT statements.
+                        SET NOCOUNT ON;
+                        IF @Mode='REGISTER'
+                        BEGIN
+                        INSERT INTO tbl_StudentMaster
+                        (
+                        [ApplyingFor]
+                        ,[DOB]
+                        ,[Gender]
+                        ,[FirstName]
+                        ,[MiddleName]
+                        ,[LastName]
+                        ,[MobileNo]
+                        ,[Email]
+                        )
+                        Values
+                        (
+                        @ApplyingFor
+                        ,@DOB
+                        ,@Gender
+                        ,@FirstName
+                        ,@MiddleName
+                        ,@LastName
+                        ,@MobileNo
+                        ,@Email
+                        )
+                        SET @StudentID=SCOPE_IDENTITY()
+                        Select * from tbl_StudentMaster where ID=@StudentID
 
-        <div class="section">
-            <h2>Customize app</h2>
-            <ul>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615541">Get started with ASP.NET MVC</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615523">Change the site's theme</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615524">Add more libraries using NuGet</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615542">Configure authentication</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615526">Customize information about the website users</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615527">Get information from social providers</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615528">Add HTTP services using ASP.NET Web API</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615529">Secure your web API</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615530">Add real-time web with ASP.NET SignalR</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615531">Add components using Scaffolding</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615532">Test your app with Browser Link</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615533">Share your project</a></li>
-            </ul>
-        </div>
+                        END
+                        IF @Mode='STEP1'
+                        BEGIN
 
-        <div class="section">
-            <h2>Deploy</h2>
-            <ul>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615534">Ensure your app is ready for production</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615535">Microsoft Azure</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615536">Hosting providers</a></li>
-            </ul>
-        </div>
+                        UPDATE tbl_StudentMaster
+                        SET ApplyingFor=@ApplyingFor,
+                        DOB=@DOB,
+                        Gender=@Gender,
+                        FirstName=@FirstName,
+                        MiddleName=@MiddleName,
+                        LastName=@LastName,
+                        MobileNo=@MobileNo,
+                        Email=@Email
+                        WHERE ID=@StudentID
+                        Select * FROM  tbl_StudentMaster WHERE ID=@StudentID
+                        END
+                        ELSE IF @Mode='STEP2'
+                        BEGIN
 
-        <div class="section last">
-            <h2>Get help</h2>
-            <ul>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615537">Get help</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615538">Get more templates</a></li>
-            </ul>
-        </div>
-    </div>
+                        UPDATE tbl_StudentMaster
+                        SET ExamChoice=@ExamChoice,
+                        State=@State,
+                        City=@City,
+                        IDCardType=@IDCardType,
+                        IDCardNumber=@IDCardNumber,
+                        ExaminationMedium=@ExaminationMedium,
+                        CityPreference1=@CityPreference1,
+                        CityPreference2=@CityPreference2,
+                        CityPreference3=@CityPreference3,
+                        CityPreference4=@CityPreference4
+                        WHERE ID=@StudentID
+                        Select * FROM  tbl_StudentMaster WHERE ID=@StudentID
+                        END
+                        ELSE IF @Mode='STEP3'
+                        BEGIN
+                        Select * FROM  tbl_StudentMaster WHERE ID=@StudentID
+                        END
+                        ELSE IF @Mode='STEP4'
+                        BEGIN
 
-</body>
-</html>
+                        Update tbl_StudentMaster
+                        SET _10thPassingYear=@_10thPassingYear,
+                        _10thPassingBoard=@_10thPassingBoard,
+                        _10thPassingPercentag=@_10thPassingPercentag,
+                        _12thPassingYear=@_12thPassingYear,
+                        _12thPassingBoard=@_12thPassingBoard,
+                        _12thPassingPercentag=@_12thPassingPercentag,
+
+                        GraduationPassingYear =@GraduationPassingYear,
+                        GraduationPassingBoard=@GraduationPassingBoard,
+                        GraduationPassingPercentag=@GraduationPassingPercentag,
+
+                        PostGraduationPassingYear =@Post_GraduationPassingYear,
+                        PostGraduationPassingBoard=@Post_GraduationPassingBoard,
+                        PostGraduationPassingPercentag=@Post_GraduationPassingPercentag,
+
+                        Any_OtherPassingYear =@Any_OtherPassingYear,
+                        Any_OtherPassingBoard=@Any_OtherPassingBoard,
+                        Any_OtherPassingPercentag=@Any_OtherPassingPercentag
+
+                        WHERE ID=@StudentID
+
+
+
+
+
+                        Select * FROM  tbl_StudentMaster WHERE ID=@StudentID
+                        END
+                        ELSE IF @Mode='STEP5'
+                        BEGIN
+                        Select * FROM  tbl_StudentMaster WHERE ID=@StudentID
+                        END
+
+                        ELSE IF @Mode='STEP6'
+                        BEGIN
+                        UPDATE tbl_StudentMaster SET PaymentID =@PaymentID WHERE ID = @StudentID
+                        select * from tbl_StudentMaster WHERE ID  = @StudentID
+                        END
+
+                        ELSE IF @Mode='GetDetails'
+                        BEGIN
+                        Select * from tbl_StudentMaster WHERE  ID  = @StudentID
+                        END
+                        ELSE IF @Mode='GetAllRecord'
+                        BEGIN
+                        Select * from tbl_StudentMaster
+                        END
+
+                        END
+                        -- Insert statements for procedure here
+
+
+
+
+                        GO
+                        /****** Object:  Table [dbo].[tbl_StateMaster]    Script Date: 30-10-2019 10:28:27 ******/
+                        SET ANSI_NULLS ON
+                        GO
+                        SET QUOTED_IDENTIFIER ON
+                        GO
+                        SET ANSI_PADDING ON
+                        GO
+                        CREATE TABLE [dbo].[tbl_StateMaster](
+                        [ID] [bigint] IDENTITY(1,1) NOT NULL,
+                        [Name] [varchar](200) NULL,
+                        [IsActive] [bit] NULL
+                        ) ON [PRIMARY]
+
+                        GO
+                        SET ANSI_PADDING OFF
+                        GO
+                        /****** Object:  Table [dbo].[tbl_StudentMaster]    Script Date: 30-10-2019 10:28:27 ******/
+                        SET ANSI_NULLS ON
+                        GO
+                        SET QUOTED_IDENTIFIER ON
+                        GO
+                        CREATE TABLE [dbo].[tbl_StudentMaster](
+                        [ID] [bigint] IDENTITY(1,1) NOT NULL,
+                        [ApplyingFor] [nvarchar](max) NULL,
+                        [DOB] [nvarchar](max) NULL,
+                        [Gender] [nvarchar](max) NULL,
+                        [FirstName] [nvarchar](max) NULL,
+                        [MiddleName] [nvarchar](max) NULL,
+                        [LastName] [nvarchar](max) NULL,
+                        [MobileNo] [nvarchar](max) NULL,
+                        [Email] [nvarchar](max) NULL,
+                        [ExamChoice] [nvarchar](max) NULL,
+                        [State] [nvarchar](max) NULL,
+                        [City] [nvarchar](max) NULL,
+                        [IDCardType] [nvarchar](max) NULL,
+                        [IDCardNumber] [nvarchar](max) NULL,
+                        [ExaminationMedium] [nvarchar](max) NULL,
+                        [CityPreference1] [nvarchar](max) NULL,
+                        [CityPreference2] [nvarchar](max) NULL,
+                        [CityPreference3] [nvarchar](max) NULL,
+                        [CityPreference4] [nvarchar](max) NULL,
+                        [_10thPassingYear] [nvarchar](max) NULL,
+                        [_12thPassingYear] [nvarchar](max) NULL,
+                        [GraduationPassingYear] [nvarchar](max) NULL,
+                        [PostGraduationPassingYear] [nvarchar](max) NULL,
+                        [Any_OtherPassingYear] [nvarchar](max) NULL,
+                        [_10thPassingBoard] [nvarchar](max) NULL,
+                        [_12thPassingBoard] [nvarchar](max) NULL,
+                        [GraduationPassingBoard] [nvarchar](max) NULL,
+                        [PostGraduationPassingBoard] [nvarchar](max) NULL,
+                        [Any_OtherPassingBoard] [nvarchar](max) NULL,
+                        [_10thPassingPercentag] [nvarchar](max) NULL,
+                        [_12thPassingPercentag] [nvarchar](max) NULL,
+                        [GraduationPassingPercentag] [nvarchar](max) NULL,
+                        [PostGraduationPassingPercentag] [nvarchar](max) NULL,
+                        [Any_OtherPassingPercentag] [nvarchar](max) NULL,
+                        [PhotographDoc] [nvarchar](max) NULL,
+                        [SignatureDoc] [nvarchar](max) NULL,
+                        [Marksheet10Doc] [nvarchar](max) NULL,
+                        [Marksheet12Doc] [nvarchar](max) NULL,
+                        [AnyotherDoc] [nvarchar](max) NULL,
+                        [CreateDate] [datetime] NULL CONSTRAINT [DF_tbl_StudentMaster_CreateDate]  DEFAULT (getdate()),
+                        [PaymentID] [nvarchar](max) NULL,
+                        [Password] [nvarchar](max) NULL
+                        ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+                        GO
+                        SET IDENTITY_INSERT [dbo].[tbl_StateMaster] ON
+
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (2, N'Andaman and Nicobar', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (3, N'Andhra Pradesh', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (4, N'Arunachal Pradesh', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (5, N'Assam', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (6, N'Bihar', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (7, N'Chandigarh', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (8, N'Chhattisgarh', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (9, N'Dadra and Nagar Haveli', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (10, N'Daman and Diu', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (11, N'Goa', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (12, N'Gujarat', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (13, N'Haryana', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (14, N'Himachal Pradesh', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (15, N'Jammu and Kashmir', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (16, N'Jharkhand', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (17, N'Karnataka', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (18, N'Kerala', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (19, N'Lakshadweep', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (20, N'Madhya Pradesh', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (21, N'Maharashtra', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (22, N'Manipur', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (23, N'Meghalaya', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (24, N'Mizoram', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (25, N'Nagaland', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (26, N'Delhi', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (27, N'Odisha', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (28, N'Puducherry', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (29, N'Punjab', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (30, N'Rajasthan', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (31, N'Sikkim', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (32, N'Tamil Nadu', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (33, N'Telangana', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (34, N'Tripura', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (35, N'Uttar Pradesh', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (36, N'Uttarakhand', 1)
+                        GO
+                        INSERT [dbo].[tbl_StateMaster] ([ID], [Name], [IsActive]) VALUES (37, N'West Bengal', 1)
+                        GO
+                        SET IDENTITY_INSERT [dbo].[tbl_StateMaster] OFF
+                        GO
+                        SET IDENTITY_INSERT [dbo].[tbl_StudentMaster] ON
+
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (1, N'1', N'14/10/2018', N'1', N'RANJEET', N'S', N'SINGH', N'+917053828891', N'k123456@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-10-14 09:30:45.910' AS DateTime), NULL, N'123456789')
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (2, N'PCB', N'14/10/2018', N'Male', N'RANJEET', NULL, N'SINGH', N'+917053828891', N'test02sars@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-10-13 23:13:20.130' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (3, N'PCM', N'14/10/2018', N'Female', N'RANJEET', NULL, N'SINGH', N'+917053828891', N'kumarajayg4@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-10-13 23:16:54.590' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (4, N'PCM', N'14/10/2018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-10-13 23:33:49.813' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (5, N'PCM', N'22/12/2018', N'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-12-22 02:38:19.733' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-12-22 03:00:42.910' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-12-24 21:53:11.397' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (8, N'PCM', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-12-24 22:07:36.560' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-12-24 22:12:49.623' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (10, N'PCM', N'25/12/2018', N'Male', N'kkkkk', N'kkkkk', N'sssss', N'88888888888', N'kkkk@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-12-24 22:18:26.080' AS DateTime), N'pay_BcTLwaFMprucIp', NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (11, N'PCM', N'25/12/2018', N'Male', N'Kamlesh', NULL, N'Singh', N'07042771791', N'kamaleshs48@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-12-25 00:49:00.740' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (13, N'PCM', N'03/12/2018', N'Male', N'Kamlesh', NULL, N'Singh', N'07042771791', N'kamaleshs48@gmail.com', N'2', N'Kerala', N'Delhi', N'Voter Card', N'655555', N'English', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-01-01 10:20:11.977' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (14, N'PCM', N'01/01/1981', N'Male', N'name', N'ee', N'rr', N'7011830343', N'mymailbox0438@gmail.com', N'1', N'Bihar', N'new delhi', N'Pan Card', N'rqwrewrer', N'English', N'new delhi', N'new delhi', N'new delhi', N'new delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-01-03 02:52:13.403' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (15, N'PCM', N'03/12/2018', N'Male', N'Kamlesh', NULL, N'Singh', N'07042771791', N'kamaleshs48@gmail.com', N'1', N'Dadra and Nagar Haveli', N'Delhi', N'Voter Card', N'655555', N'English', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-01-04 23:16:10.500' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (17, N'PCM', N'06/01/2019', N'Male', N'Jaswant', N'Singh', N'Rawat', N'9718690409', N'mymailbox0438@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-01-05 22:17:40.333' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (18, N'PCM', N'27/12/2001', N'Male', N'raji', N'453', N's', N'4534545555', N'ctgroupdelhi@gmail.com', N'2', N'Lakshadweep', N'dfg', N'Voter Card', N'dfggdfs', N'English', N'34523', N'fg', N'345dfg', N'fg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-01-07 02:54:53.353' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (19, N'PCM', N'20/12/2002', N'Female', N'Dhiyana ', N'Dhiyana', N'Dhiyana ', N'9995295682', N'Saam097@gmail.com', N'1', N'Kerala', N'Mampad ', N'Aadhar Card', N'764985645148', N'English', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-01-12 22:41:51.420' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (20, N'PCM', N'08/09/2001', N'Male', N'Akash', NULL, N'Kumar', N'7909018255', N'amankumar05419@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-01-16 03:37:36.783' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (21, N'PCM', N'10/01/1991', N'Male', N'AMIT', NULL, N'KUMAR', N'8923086158', N'amitmn1991@gmail.com', N'1', N'Haryana', N'PANIPAT', N'Pan Card', N'DJGPK6019D', N'Hindi', N'PANPAT', N'KARNAL', N'SONIPAT', N'DELHI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-01-23 04:01:18.497' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (22, N'PCM', N'02/11/2001', N'Male', N'Utkarsh', N'Daulat', N'Lokhande', N'9623956843', N'utkarshlokhande321@gmail.com', N'1', N'Maharashtra', N'Aurangabad', N'Aadhar Card', N'878068948911', N'English', N'Aurangabad', N'Mumbai', N'Pune', N'Nagpur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-01 21:09:57.550' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (23, N'PCM', N'18/12/2005', N'Male', N'Ashutosh', NULL, N'Sharma', N'8435209182', N'Ashish134110juet@gmail.com', N'1', N'Madhya Pradesh', N'Guna', N'Aadhar Card', N'424492321975', N'English', N'Guna', N'Guna', N'Gwalior', N'Gwalior', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-10 08:21:17.433' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (24, N'PCM', N'27/12/2001', N'Male', N'ww', N'rr', N'rr', N'rrr', N'info@flyhigroup.com', N'2', N'Madhya Pradesh', N'ff', N'Voter Card', N'cff', N'English', N'f', N'f', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-12 07:24:29.950' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (25, N'PCM', N'30/12/1997', N'Male', N'hvhkhk', NULL, N'uygyigy', N'7011830343', N'jasawntjojo21@gmail.com', N'1', N'Delhi', N'new delhi', N'Voter Card', N'rqwrewrer', N'English', N'new delhi', N'new delhi', N'new delhi', N'new delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-13 01:14:39.630' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (26, N'PCB', N'30/12/1997', N'Male', N'juj', NULL, N'jkk', N'123154654', N'mymailbox0438@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-13 02:21:04.547' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (28, N'PCM', N'30/12/1997', N'Male', N'juj', NULL, N'uygyigy', N'7011830343', N'jasawntjojo21@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-19 00:01:06.117' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (29, N'PCB', N'04/12/2004', N'Male', N'ADITYA', N'KUMAR', N'SHARMA', N'9996174833', N'sharmamanoj24680@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-20 05:56:27.933' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (30, N'PCB', N'04/12/2004', N'Male', N'Aditya ', N'Kumar', N'Sharma', N'9996174833', N'sharmamanoj24680@gmail.com', N'1', N'Haryana', N'Rewari', N'Aadhar Card', N'429687780492', N'English', N'Mahendergarh', N'Rewari', N'Rewari', N'Rewari', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-20 06:24:37.243' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (31, N'PCB', N'04/12/2004', N'Male', N'ADITYA', N'KUMAR', N'SHARMA', N'9996174833', N'sharmamanoj24680@gmail.com', N'1', N'Haryana', N'REWARI', N'Aadhar Card', N'429687780492', N'English', N'REWARI', N'REWARI', N'REWARI', N'REWARI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-20 07:14:11.333' AS DateTime), N'pay_BybBkPYYArmMSg', NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (32, N'PCM', N'30/12/1997', N'Male', N'rw', NULL, N'uygyigy', N'7011830343', N'jasawntjojo21@gmail.com', N'1', N'Andaman and Nicobar', N'new delhi', N'Aadhar Card', N'rqwrewrer', N'English', N'new delhi', N'new delhi', N'new delhi', N'new delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-20 23:52:11.980' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (33, N'PCM', N'12/01/1996', N'Male', N'Arsalan', N'Manzoor', N'Zargar', N'7006416585', N'arslanb321@gmail.com', N'1', N'Jammu and Kashmir', N'Srinagar', N'Aadhar Card', N'308285578235', N'English', N'Srinagar', N'Jammu', N'Delhi', N'Chandigarh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-21 08:51:11.370' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (37, N'PCM', N'06/07/1974', N'Male', N'KOLLU', N'LINGA', N'REDDY', N'9491184308', N'POOJABANU@GMAIL.COM', N'1', N'Telangana', N'SURYAPET', N'Aadhar Card', NULL, N'English', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-25 07:25:46.037' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (38, N'PCM', N'30/12/1997', N'Male', N'juj', NULL, N'uygyigy', N'7011830343', N'mymailbox0438@gmail.com', N'2', N'Andhra Pradesh', NULL, N'Aadhar Card', N'rqwrewrer', N'English', N'new delhi', N'new delhi', N'new delhi', N'new delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-25 23:18:54.957' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (40, N'PCM', N'30/01/2019', N'Male', N'asdad', N'sas', N'SA', N'ddddddd', N'Sales@flyhigroup.com', N'2', N'Madhya Pradesh', N'EE', N'Voter Card', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-26 04:44:09.177' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (41, N'PCM', N'22/02/2019', N'Male', N'Bathua Soft', N'Private', N'Limited', N'8552222222', N'sales@bathuasoft.com', N'2', N'Goa', N'New Delhi', N'Voter Card', N'4654546546', N'English', N'New Delhi', N'New Delhi', N'New Delhi', N'New Delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-26 16:50:51.693' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (42, N'PCM', N'31/01/2019', N'Male', N'Bathua Soft', N'Private', N'Limited', N'8552222222', N'sales@bathuasoft.com', N'2', N'Lakshadweep', N'New Delhi', N'Aadhar Card', N'4654546546', N'English', N'New Delhi', N'New Delhi', N'New Delhi', N'New Delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-27 22:30:14.860' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (43, N'PCM', N'30/12/1997', N'Male', N'juj', NULL, N'uygyigy', N'7011830343', N'jasawntjojo21@gmail.com', N'2', N'Lakshadweep', N'new delhi', N'Voter Card', N'rqwrewrer', N'English', N'new delhi', N'new delhi', N'new delhi', N'new delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-27 23:34:40.110' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (45, N'PCM', N'13/03/2019', N'Male', N'A', N'SAI', N'KUMAR', N'9505394149', N'LOIOPO@GMAIL.COM', N'2', N'Telangana', N'SURYAPET', N'Voter Card', N'321343+99', N'English', N'SURYAPET', N'SURYAPET', N'SURYAPET', N'SURYAPET', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-03-12 18:04:54.490' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (46, N'PCM', N'28/11/2003', N'Male', N'Khushman', NULL, N'Aggarwal', N'9450960721', N'lmaggarwal@yahoo.com', N'1', N'Haryana', N'Varanasi', N'Aadhar Card', NULL, N'English', N'Varanasi', N'Lucknow', N'Allahabad', N'Delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-03-13 06:55:24.663' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (48, N'PCM', N'14/05/2002', N'Male', N'Basi reddy', N'Durga prasad ', N'Reddy', N'6301834376', N'Durgaprasadreddybasireddy673@gmail.com', N'2', N'Andhra Pradesh', N'Kadapa', N'Aadhar Card', N'638746776240', N'English', N'Kadapa', N'Vijayawada', N'Tirupati', N'Kurnool', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-03-16 20:41:13.987' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (49, N'PCB', N'27/02/2019', N'Male', N'sqe', N'w', N'w', N'eeeeeeee', N'Sales@flyhigroup.com', N'1', N'Andhra Pradesh', N'New Delhi', N'Voter Card', NULL, N'English', NULL, N'New Delhi', N'New Delhi', N'New Delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-03-19 22:55:38.923' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (50, N'PCM', N'15/10/2019', N'Male', N'fs', N'wd', N'Gupta', N'8750034235', N'admin@gmail.com', N'1', N'Chandigarh', N'fd', N'Voter Card', N'zdzfggdg', N'English', N'WEST DELHI', N'WEST DELHI', N'WEST DELHI', N'WEST DELHI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-10-19 03:34:51.917' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (12, N'PCM', N'27/12/2001', N'Male', N'ranchi', N'rrr', N's', N'7011830343', N'test1234@gmail.com', N'1', N'Bihar', NULL, N'Pan Card', N'aiufr7829j', N'English', N'delhi', NULL, NULL, NULL, N'dasdSAS', N'ASAS', NULL, NULL, NULL, N'SS', N'SX', NULL, NULL, NULL, N'HKK', N'DS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2018-12-27 03:32:04.607' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (16, N'PCM', N'01/01/2019', N'Male', N'raji', N'p', N'nuib', N'7011839343', N'mymailbox0438@gmail.com', N'1', N'Kerala', N'jinion', N'Voter Card', N'yg778768', NULL, N'SOUTH WEST DELHI', N'SOUTH WEST DELHI', N'SOUTH WEST DELHI', N'SOUTH WEST DELHI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-01-05 00:56:42.037' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (39, N'PCM', N'21/02/2019', N'Male', N'sssss', N'sssss', N'ssssss', N'2424242424', N'sales@bathuasoft.com', N'1', N'Madhya Pradesh', N'New Delhi', N'Voter Card', N'4654546546', N'English', N'New Delhi', N'New Delhi', N'New Delhi', N'New Delhi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-26 00:06:56.983' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (44, N'PCB', N'19/02/2019', N'Male', N'hj', NULL, N'ujiju', N'9662169911', N'ae@gmail.com', N'2', N'Bihar', N'hj', N'Voter Card', N'jh', N'Hindi', N'hj', N'hj', N'hj', N'hj', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-27 23:45:31.010' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (47, N'PCM', N'31/01/2001', N'Male', N'Mudit', NULL, N'Agarwal', N'9415006827', N'muktiagarwal7@gmail.com', N'2', N'Uttar Pradesh', N'lucknow', N'Aadhar Card', N'765227888327', N'English', N'Lucknow', N'Kanpur', N'Delhi', N'Gorakhpur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-03-14 09:18:46.430' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (27, N'PCM', N'27/12/2001', N'Male', N'hu', N'wui', N'gwy', N'jhjk', N'jiow@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-14 06:23:48.170' AS DateTime), NULL, NULL)
+                        GO
+                        INSERT [dbo].[tbl_StudentMaster] ([ID], [ApplyingFor], [DOB], [Gender], [FirstName], [MiddleName], [LastName], [MobileNo], [Email], [ExamChoice], [State], [City], [IDCardType], [IDCardNumber], [ExaminationMedium], [CityPreference1], [CityPreference2], [CityPreference3], [CityPreference4], [_10thPassingYear], [_12thPassingYear], [GraduationPassingYear], [PostGraduationPassingYear], [Any_OtherPassingYear], [_10thPassingBoard], [_12thPassingBoard], [GraduationPassingBoard], [PostGraduationPassingBoard], [Any_OtherPassingBoard], [_10thPassingPercentag], [_12thPassingPercentag], [GraduationPassingPercentag], [PostGraduationPassingPercentag], [Any_OtherPassingPercentag], [PhotographDoc], [SignatureDoc], [Marksheet10Doc], [Marksheet12Doc], [AnyotherDoc], [CreateDate], [PaymentID], [Password]) VALUES (36, N'PCM', N'20/02/2019', N'Male', N'Bathua Soft', N'Private', N'Limited', N'8552222222', N'sales@bathuasoft.com', N'1', N'Madhya Pradesh', N'New Delhi', N'Voter Card', N'4654546546', N'English', N'New Delhi', N'New Delhi', N'New Delhi', N'New Delhi', N'2019', N'2018', N'2017', N'2016', N'2015', N'ds', N'sd', N'sd', N'ds', N'ds', N'21', N'21', NULL, N'12', N'12', NULL, NULL, NULL, NULL, NULL, CAST(N'2019-02-22 23:23:27.557' AS DateTime), N'pay_BzeJgGCr47rbxB', NULL)
+                        GO
+                        SET IDENTITY_INSERT [dbo].[tbl_StudentMaster] OFF
+                        GO
