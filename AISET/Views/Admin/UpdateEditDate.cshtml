@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "UpdateEditDate";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model AISET.Models.EditUpdateDateModels
+
+@using (Html.BeginForm("UpdateEditDate", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <h1>@ViewBag.Message</h1>
+        Enter Last date For Edit:
+        @Html.TextBoxFor(model => model.LastEditDate,new {@class="form-control" })
+        <input type="submit" value="Submit" class="btn btn-default" />
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

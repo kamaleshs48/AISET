@@ -12,6 +12,8 @@ using System.Text;
 using System.Security.Cryptography;
 using AISET.Models;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+
 namespace AISET.Repository.DL
 {
     public static class CommanFunction
@@ -275,6 +277,16 @@ namespace AISET.Repository.DL
             Footer += "<span style='font-size:10px;font-family:Times New Roman'>GreenCar understand that air pollution & traffic congestion is matter of concern for all of us.  We are also trying to reduce your driving stress and fuel expenses. Kindly help us in this noble cause.</span>";
             Footer += "<br/>-----------------------------------------------------------------------------------------------------------------<br/>";
             return Footer;
+        }
+
+        internal static void SendEmailAsync(IdentityMessage message)
+        {
+            
+        }
+
+        internal static object URLEncode(object p)
+        {
+            throw new NotImplementedException();
         }
 
         //public static int CreateScheduleClass(ScheduleClassModels model)

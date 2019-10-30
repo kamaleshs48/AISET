@@ -5,6 +5,8 @@ using System.Web;
 using AISET.Models;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
+
 namespace Student.Repository.DL
 {
     public class clsLoginDL
@@ -27,7 +29,7 @@ namespace Student.Repository.DL
                 result.Email = ds.Tables[0].Rows[0]["Email"].ToString();
                 result.UserID = Convert.ToInt32(ds.Tables[0].Rows[0]["ID"].ToString());
                 result.FirstName = ds.Tables[0].Rows[0]["FirstName"].ToString();
-                 result.Response = MethodResponse.Success;
+                result.Response = MethodResponse.Success;
             }
             else
             {
@@ -36,25 +38,63 @@ namespace Student.Repository.DL
             return result;
 
         }
-        public static ResponseModels ForgotPassword(ForgotPasswordModels models)
+
+        internal static ResponseModels ChangePassword(ChangePasswordViewModel models)
+        {
+            ResponseModels _Resp = new ResponseModels();
+            try
+            {
+                DataSet ds = new DataSet();
+                ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.Text, "UPDATE tbl_StudentMaster Set Password= '" + models.NewPassword + "' Where ID=" + models.UserID);
+
+                _Resp.Response = MethodResponse.Success;
+            }
+            catch (Exception ex)
+            {
+                _Resp.Response = MethodResponse.SomthingWorng;
+                _Resp.Email = ex.Message;
+            }
+            return _Resp;
+        }
+
+        internal static string GetLastDateForEdit()
+        {
+            CultureInfo provider = CultureInfo.InvariantCulture;
+
+            DataSet ds = new DataSet();
+            ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.Text, "Select CONVERT(VARCHAR,LastDate,103) from tbl_StudentEditDate");
+
+            return ds.Tables[0].Rows[0][0].ToString();
+
+
+        }
+
+        internal static ResponseModels UpdateStudentDetails(StudentModels models)
         {
             ResponseModels result = new ResponseModels();
             result.Response = MethodResponse.Success;
             DataSet ds = new DataSet();
             SqlParameter[] pr = new SqlParameter[]
             {
-            new SqlParameter("@Email",models.Email),
-            new SqlParameter("@Password",models.Password),
-            new SqlParameter("@Mode","ForgotPassword")
+            new SqlParameter("@FirstName",models.FirstName),
+            new SqlParameter("@LastName",models.LastName),
+            new SqlParameter("@MobileNo",models.MobileNo),
+          
+            new SqlParameter("@DOB",models.DOB),
+            new SqlParameter("@StudentID",models.StudentID),
+
+            new SqlParameter("@Mode","UpdateStudentDetails")
             };
-            ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.StoredProcedure, "sp_Login", pr);
+            ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.StoredProcedure, "sp_SaveUpdateRecord", pr);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
+
                 result.Email = ds.Tables[0].Rows[0]["Email"].ToString();
                 result.UserID = Convert.ToInt32(ds.Tables[0].Rows[0]["id"].ToString());
-                result.FirstName = ds.Tables[0].Rows[0]["StudentFirstName"].ToString();
-                result.LastName = ds.Tables[0].Rows[0]["StudentLastName"].ToString();
-                result.OrgID = Convert.ToInt32(ds.Tables[0].Rows[0]["ORGID"].ToString());
+                result.FirstName = ds.Tables[0].Rows[0]["FirstName"].ToString();
+                result.LastName = ds.Tables[0].Rows[0]["LastName"].ToString();
+                result.Password = ds.Tables[0].Rows[0]["Password"].ToString();
+                // result.OrgID = Convert.ToInt32(ds.Tables[0].Rows[0]["ORGID"].ToString());
                 result.Response = MethodResponse.Success;
             }
             else
@@ -64,7 +104,81 @@ namespace Student.Repository.DL
             return result;
         }
 
+        internal static string UpdateLastDateForEdit(string lastDate)
+        {
 
+            SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.Text, "UPDATE tbl_StudentEditDate Set  LastDate ='" + DateTime.ParseExact(lastDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) + "'");
+            return "";
+
+        }
+
+        public static ResponseModels ForgotPassword(ForgotPasswordModels models)
+        {
+            ResponseModels result = new ResponseModels();
+            result.Response = MethodResponse.Success;
+            DataSet ds = new DataSet();
+            SqlParameter[] pr = new SqlParameter[]
+            {
+            new SqlParameter("@Email",models.Email),
+
+            new SqlParameter("@Mode","ForgotPassword")
+            };
+            ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.StoredProcedure, "sp_Login", pr);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+
+                result.Email = ds.Tables[0].Rows[0]["Email"].ToString();
+                result.UserID = Convert.ToInt32(ds.Tables[0].Rows[0]["id"].ToString());
+                result.FirstName = ds.Tables[0].Rows[0]["FirstName"].ToString();
+                result.LastName = ds.Tables[0].Rows[0]["LastName"].ToString();
+                result.Password = ds.Tables[0].Rows[0]["Password"].ToString();
+                // result.OrgID = Convert.ToInt32(ds.Tables[0].Rows[0]["ORGID"].ToString());
+                result.Response = MethodResponse.Success;
+            }
+            else
+            {
+                result.Response = MethodResponse.Invalid_Email_And_Password;
+            }
+            return result;
+        }
+
+        internal static int UpdateStudentDetails(RegisterModels models)
+        {
+            SqlParameter[] pr = new SqlParameter[]
+           {
+            new SqlParameter("@Email",models.Email),
+
+            new SqlParameter("@Mode","ForgotPassword")
+           };
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnectionStr(), CommandType.StoredProcedure, "sp_Login", pr);
+
+        }
+
+        internal static StudentModels BindStudentDetailsByID(int studentID)
+        {
+
+
+            StudentModels _models = new StudentModels();
+            string _Qry = "Select * from tbl_StudentMaster Where ID=" + studentID;
+
+
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.Text, _Qry);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+
+                _models.FirstName = ds.Tables[0].Rows[0]["FirstName"].ToString();
+                _models.LastName = ds.Tables[0].Rows[0]["LastName"].ToString();
+                _models.Email = ds.Tables[0].Rows[0]["Email"].ToString();
+                _models.MobileNo = ds.Tables[0].Rows[0]["MobileNo"].ToString();
+                _models.DOB = ds.Tables[0].Rows[0]["DOB"].ToString();
+                _models.StudentID = studentID.ToString();
+
+            }
+
+
+
+            return _models;
+        }
 
         public static ResponseModels Register(RegisterModels models)
         {
@@ -290,12 +404,46 @@ namespace Student.Repository.DL
             SqlParameter[] pr = new SqlParameter[]
            {
             new SqlParameter("@PaymentID",PID),
-           
+
              new SqlParameter("@StudentID",FID),
              new SqlParameter("@Mode","STEP6"),
            };
 
             return SqlHelper.ExecuteNonQuery(SqlHelper.ConnectionStr(), CommandType.StoredProcedure, "sp_SaveUpdateRecord", pr);
+        }
+
+
+
+        public static List<RegisterModels> GetAllStudentList()
+        {
+            List<RegisterModels> _List = new List<RegisterModels>();
+
+            string _Qry = "Select * from tbl_StudentMaster";
+
+
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.Text, _Qry);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    _List.Add(new RegisterModels
+                    {
+                        FirstName = dr["FirstName"].ToString(),
+                        LastName = dr["FirstName"].ToString(),
+                        Email = dr["FirstName"].ToString(),
+                        MobileNo = dr["FirstName"].ToString(),
+                        ExaminationPrefrence1 = dr["CityPreference1"].ToString(),
+                        ExaminationPrefrence2 = dr["CityPreference2"].ToString(),
+                        Applaying = dr["ApplyingFor"].ToString(),
+                    });
+
+                }
+            }
+
+
+            return _List;
+
+
         }
     }
 }

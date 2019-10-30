@@ -157,9 +157,9 @@
                                     <div class="fill" id="f2" style="border-color: green;"></div>
                                 </div>
                             </div>
-                            <div class="showcount" style="text-align: center; padding-top: 12%; font-size: 2em;">80 %</div>
+                            <div class="showcount" style="text-align: center; padding-top: 12%; font-size: 2em;"></div>
                             <span>
-                                Profile Completed
+                               
                             </span>
                         </div>
                         <div class="profile-info" style="clear: both">
@@ -187,7 +187,7 @@
 
                 <ul class="main-menu">
                     <li class="active">
-                        <a href="@Url.Action("Home", "Student")"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
+                        <a href="@Url.Action("Index", "Student")"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
                     </li>
 
                     <li>
@@ -198,7 +198,7 @@
 
 
                     <li>
-                        <a href="@Url.Action("StudentResult", "Student")"><i class="zmdi zmdi-view-list"></i>Result</a>
+                        <a href="@Url.Action("ExamResults", "Student")"><i class="zmdi zmdi-view-list"></i>Result</a>
 
                     </li>
                     <li>
@@ -261,6 +261,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
+
+
     <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.flot.js"></script>
     <script src="~/Scripts/jquery.flot.resize.js"></script>
@@ -287,7 +289,6 @@
     <script src="~/Scripts/bar-chart.js"></script>
     <script src="~/Scripts/functions.js"></script>
     <script src="~/Scripts/demo.js"></script>
-
     <div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr" style="width: 5px; z-index: auto; cursor: default; position: fixed; top: 0px; height: 100%; right: 0px; display: block; opacity: 0;">
         <div class="nicescroll-cursors" style="position: relative; top: 0px; float: right; width: 5px; height: 295px; background-color: rgba(0, 0, 0, 0.298039); border: 0px; background-clip: padding-box; border-radius: 0px;"></div>
     </div>
@@ -316,3 +317,7 @@
     </div>
 </body>
 </html>
+
+
+
+

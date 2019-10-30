@@ -8,6 +8,27 @@ using AISET.Repository.DL;
 
 namespace AISET.Models
 {
+
+    public class StudentModels
+    {
+        [Required(ErrorMessage = "Please Enter First Name")]
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        [Required(ErrorMessage = "Please Enter Last Name")]
+        public string LastName { get; set; }
+        [Required(ErrorMessage = "Please Enter Mobile No")]
+        public string MobileNo { get; set; }
+        [EmailAddress(ErrorMessage = "Please Enter Valid Email Address")]
+        [Required(ErrorMessage = "Please Enter Email")]
+        public string Email { get; set; }
+        [Required(ErrorMessage = "Please Date Of Birth")]
+
+        public string DOB { get; set; }
+        public string StudentID { get; set; }
+
+
+    }
+
     public class RegisterModels
     {
         public string FormID { get; set; }
@@ -20,9 +41,11 @@ namespace AISET.Models
 
                  new SelectListItem { Text="PCM",Value="PCM" },
                  new SelectListItem { Text="PCB",Value="PCB" },
+                  new SelectListItem { Text="Olympiad Ix-X Students",Value="Olympiad Ix-X Students" },
+                 
         };
         [Required(ErrorMessage = "Please Date Of Birth")]
-       
+
         public string DOB { get; set; }
 
         [Required(ErrorMessage = "Please Select Gender")]
@@ -80,6 +103,7 @@ namespace AISET.Models
         };
 
 
+        [Required]
         public string ExaminationPrefrence1 { get; set; }
         public string ExaminationPrefrence2 { get; set; }
         public string ExaminationPrefrence3 { get; set; }
@@ -121,6 +145,9 @@ namespace AISET.Models
         public string Marksheet12 { get; set; }
         public string Any_Other { get; set; }
         public string PaybalAmount { get; set; }
+        public string PaymentStatus { get; set; }
+
+        public List<RegisterModels> _StudentList = new List<RegisterModels>();
 
     }
     public class LoginModels

@@ -13,9 +13,25 @@ namespace AISET.Repository.BL
             return clsLoginDL.Login(models);
         }
 
+
+        public static ResponseModels ChangePassword(ChangePasswordViewModel models)
+        {
+            return clsLoginDL.ChangePassword(models);
+        }
+
+        public static string UpdateLastDateForEdit(string LastDate)
+        {
+            return clsLoginDL.UpdateLastDateForEdit(LastDate);
+        }
+
+        public static string GetLastDateForEdit()
+        {
+            return clsLoginDL.GetLastDateForEdit();
+        }
+
         public static ResponseModels ForgotPassword(ForgotPasswordModels models)
         {
-            return   clsLoginDL.ForgotPassword (models);
+            return clsLoginDL.ForgotPassword(models);
         }
 
         public static ResponseModels Register(RegisterModels models)
@@ -43,9 +59,31 @@ namespace AISET.Repository.BL
         {
             return clsLoginDL.Step5(models);
         }
-        public static  int UpdatePayment (string FID,string PID)
+        public static int UpdatePayment(string FID, string PID)
         {
             return clsLoginDL.UpdatePayment(FID, PID);
         }
+
+        public static List<RegisterModels> GetAllStudentList()
+        {
+            return clsLoginDL.GetAllStudentList();
+        }
+
+
+        public static StudentModels BindStudentDetailsByID(int studentID)
+        {
+            return clsLoginDL.BindStudentDetailsByID(studentID);
+        }
+        public static int UpdateStudentDetails(RegisterModels models)
+        {
+            return clsLoginDL.UpdateStudentDetails(models);
+        }
+
+        public static ResponseModels UpdateStudentDetails(StudentModels models)
+        {
+            return clsLoginDL.UpdateStudentDetails(models);
+        }
+
     }
+
 }

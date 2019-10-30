@@ -2,7 +2,56 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int Index = 1;
 }
 
-<h2>Index</h2>
+@model AISET.Models.RegisterModels
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <strong>Student List</strong>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <table class="table table-bordered">
+                <tr>
+                    <th>SR.N.</th>
 
+                    <th>Applaying </th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Mobile No</th>
+                    <th>Exam Prefrence1</th>
+                    <th>Exam Prefrence2</th>
+                    <th>Payment Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+                @foreach (var l in Model._StudentList)
+                {
+                    <tr>
+                        <td>@Index</td>
+
+                        <td>@l.Applaying</td>
+                        <td>@l.FirstName</td>
+                        <td>@l.LastName </td>
+                        <td>@l.Email </td>
+                        <td>@l.MobileNo </td>
+                        <td>@l.ExaminationPrefrence1 </td>
+                        <td>@l.ExaminationPrefrence1 </td>
+                        <td>@l.PaymentStatus </td>
+                        <td> <a href="#" class="btn btn-primary">Generate Admit Card</a>  </td>
+
+                    </tr>
+                    Index += 1;
+                }
+
+
+            </table>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <a href="#" class="btn btn-primary">Add New</a>
+    </div>
+</div>

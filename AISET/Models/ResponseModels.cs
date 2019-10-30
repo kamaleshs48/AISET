@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.ComponentModel.DataAnnotations;
 namespace AISET.Models
 {
+
+
+    public class EditUpdateDateModels
+    {
+        [Required(ErrorMessage = "Please enter Date")]
+        public string LastEditDate { get; set; }
+    }
     public class ResponseModels
     {
         public string FirstName { get; set; }
@@ -28,6 +35,7 @@ namespace AISET.Models
     {
         public const string LoginUserDetails = "LoginUserDetails";
         public const string UserID = "UserID";
-        
+        public const string Password = "Password";
+
     }
 }

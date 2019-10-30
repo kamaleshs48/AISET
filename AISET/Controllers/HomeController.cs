@@ -5,16 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 using AISET.Models;
 using AISET.Repository.BL;
+using Microsoft.AspNet.Identity;
+using AISET.Controllers;
+using AISET.Repository.DL;
+
 namespace AISET.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         ResponseModels res = new ResponseModels();
 
 
-        
-
-
+        public ActionResult ForgotRegistrationNo()
+        {
+            return View();
+        }
         [HttpGet]
         public ActionResult Step1()
         {
@@ -58,10 +63,10 @@ namespace AISET.Controllers
             }
             else
             {
-                
+
                 models.PaybalAmount = (999 * 100).ToString();
             }
-           return View(models);
+            return View(models);
         }
 
         [HttpGet]
@@ -297,26 +302,30 @@ namespace AISET.Controllers
         [HttpPost]
         public ActionResult Login(LoginModels models)
         {
-            if(models.EmailID=="admin@gmail.com" && models.Password=="abc@123456")
+            if (models.EmailID == "admin@gmail.com" && models.Password == "abc@123456")
             {
-               
-                return RedirectToAction("DashBoard");
+                Session[SessionVariable.UserID] = "1";
+
+                Session["FirstName"] = "Admin";
+                return RedirectToAction("Index", "Admin");
             }
             ResponseModels respModels = new ResponseModels();
             respModels = clsLoginBL.Login(models);
 
-            if(respModels.Response==MethodResponse.Success)
+            if (respModels.Response == MethodResponse.Success)
             {
                 Session[SessionVariable.LoginUserDetails] = respModels;
+                Session[SessionVariable.UserID] = respModels.UserID;
+                Session[SessionVariable.Password] = models.Password;
                 Session["FirstName"] = respModels.FirstName;
-                return RedirectToAction("Index","Student");
+                return RedirectToAction("Index", "Student");
             }
             else
             {
                 ModelState.AddModelError("", "Invalid Email or Password");
                 return View(models);
             }
-           
+
 
         }
 
@@ -332,15 +341,76 @@ namespace AISET.Controllers
 
         public ActionResult UPayment(string FID, string PID)
         {
-            
+
             clsLoginBL.UpdatePayment(FID, PID);
             return Json("Success", JsonRequestBehavior.AllowGet);
 
 
         }
+        [HttpGet]
         public ActionResult ForgotPassword()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult ForgotPassword(ForgotPasswordModels models)
+        {
+            if (ModelState.IsValid)
+            {
+
+                res = clsLoginBL.ForgotPassword(models);
+                if (res.Response == MethodResponse.Success)
+                {
+
+
+
+
+                    string mailBody = "Dear <b>" + res.FirstName + "</b>,<br /><br/>";
+                    mailBody += "Your password on the " + AppSettingModel.ApplicationName + "." + "<br /><br />";
+                    mailBody += "Your details are as below:<br />";
+                    mailBody += "<b>Full name:</b> " + res.FirstName + " " + res.LastName + "<br />";
+                    mailBody += "<b>Email:</b> " + res.Email + "<br />";
+                    mailBody += "<b>Password:</b> " + res.Password + "<br /><br />";
+                    mailBody += "Please login to the service using this password. You will have to change your password when you first login. <br />";
+                    mailBody += "If you did not request to reset your password, please notify IGspectrum Support Team immediately.<br /><br />";
+                    mailBody += "Please <a href='" + this.HostName + "'>click here</a> to login into the " + AppSettingModel.ApplicationName + "." + "<br/><br/>";
+
+                    IdentityMessage Message = new IdentityMessage();
+                    Message.Subject = "Temporary password for the " + AppSettingModel.ApplicationName + "";
+                    Message.Body = mailBody + CommanFunction.GetEmailFooter();
+                    Message.Destination = res.Email;
+
+                    CommanFunction.SendEmailAsync(Message);
+                    ViewBag.JavascriptToRun = "ShowErrorPopup()";
+                    ViewBag.Error = "Password has been reset and sent to your email.";
+
+                }
+                else
+
+                {
+                    ViewBag.JavascriptToRun = "ShowErrorPopup()";
+                    ViewBag.Error = "Email ID does not exist.";
+
+                }
+
+
+            }
+            return View(models);
+        }
+
+
+
+        [HttpGet]
+        public JsonResult GetCenterList(string StateName)
+        {
+
+            List<SelectListItem> _List = new List<SelectListItem>();
+
+            _List.Add(new SelectListItem { Text = "A", Value = "A" });
+            _List.Add(new SelectListItem { Text = "B", Value = "B" });
+
+
+            return Json(_List, JsonRequestBehavior.AllowGet);
         }
 
     }
