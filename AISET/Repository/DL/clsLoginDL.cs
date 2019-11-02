@@ -6,7 +6,7 @@ using AISET.Models;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-
+using System.Text;
 namespace Student.Repository.DL
 {
     public class clsLoginDL
@@ -179,6 +179,7 @@ namespace Student.Repository.DL
 
             return _models;
         }
+        
 
         public static ResponseModels Register(RegisterModels models)
         {
@@ -195,6 +196,7 @@ namespace Student.Repository.DL
             new SqlParameter("@LastName",models.LastName),
             new SqlParameter("@MobileNo",models.MobileNo),
             new SqlParameter("@Email",models.Email),
+            new SqlParameter("@Password",models.Password),
              new SqlParameter("@Mode","REGISTER"),
             };
             ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.StoredProcedure, "sp_SaveUpdateRecord", pr);

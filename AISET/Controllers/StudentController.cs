@@ -65,7 +65,7 @@ namespace AISET.Controllers
             if (ModelState.IsValid)
 
             {
-                if (models.OldPassword == Session[SessionVariable.Password].ToString())
+                if (models.OldPassword != Session[SessionVariable.Password].ToString())
                 {
                     ModelState.AddModelError("", "The current Password does not match.");
                     return View(models);

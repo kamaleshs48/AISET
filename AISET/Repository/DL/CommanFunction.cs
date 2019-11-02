@@ -13,7 +13,8 @@ using System.Security.Cryptography;
 using AISET.Models;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-
+using System.Net;
+using System.Net.Mail;
 namespace AISET.Repository.DL
 {
     public static class CommanFunction
@@ -59,6 +60,13 @@ namespace AISET.Repository.DL
             return System.Text.Encoding.UTF8.GetString(encoded);
         }
 
+        private static Random random = new Random();
+        public static string RandomPassword(int size = 4)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, size)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
         public static DataSet GetDataSet(string Qry)
         {
             return SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.Text, Qry);
@@ -272,17 +280,113 @@ namespace AISET.Repository.DL
         {
             string Footer = "<br/><br/><strong>NOTE:</strong><br/>";
             Footer += "<br/>-----------------------------------------------------------------------------------------------------------------<br/>";
-            Footer += "<span style='font-size:10px;font-family:Times New Roman'>Kindly note that information contained in our website are for general public to use however we make no representations or warranties of any kind, expressed or implied about the completeness, accuracy, reliability , sustainability or availability with respect to users details or map or any information or electronic data for any purpose.  You are requested to follow law, rules and regulations of law of land. Kindly go through FAQ & terms and conditions page for more details.</span>";
-            Footer += "<br/><br/>";
-            Footer += "<span style='font-size:10px;font-family:Times New Roman'>GreenCar understand that air pollution & traffic congestion is matter of concern for all of us.  We are also trying to reduce your driving stress and fuel expenses. Kindly help us in this noble cause.</span>";
+            Footer += "<span style='font-size:10px;font-family:Times New Roman'>This is an auto-generated e-mail. Please Do not reply to this e-mail.</span>";
+            Footer += "<br/>";
+
             Footer += "<br/>-----------------------------------------------------------------------------------------------------------------<br/>";
             return Footer;
         }
 
         internal static void SendEmailAsync(IdentityMessage message)
         {
-            
+            try
+            {
+
+                ////Encoed
+                //byte[] bytes = Encoding.UTF8.GetBytes(body);
+                //string _body = Convert.ToBase64String(bytes);
+                ////decode
+
+                //string base64 = "YWJjZGVmPT0=";
+                //byte[] bytes1 = Convert.FromBase64String(base64);
+                //string str = Encoding.UTF8.GetString(bytes1);
+
+
+                var values = new Dictionary<string, string>
+{
+            { "FromEmail","kamaleshs48@gmail.com" },
+            { "FromPassword",  "7042771792k"},
+            { "toEmail", message.Destination},
+            { "EmailBody",message.Body },
+            { "MailSubject", message.Subject},
+            { "MailDisplayName", "AISET | " + message.Subject},
+};
+
+                var content = new System.Net.Http.FormUrlEncodedContent(values);
+
+                var response = client.PostAsync("http://t1.roken4life.com/sendemail.aspx", content);//http://localhost:57867/SendEmail.aspx    http://t1.roken4life.com/sendemail.aspx
+
+                var responseString = response.Result.Content.ReadAsStringAsync();// ReadAsStringAsync();
+
+
+
+                //using (MailMessage mail = new MailMessage())
+                //{
+                //    mail.From = new MailAddress("kamaleshs48@gmail.com");
+                //    mail.To.Add(message.Destination);
+                //    mail.Subject = "Hello World";
+                //    mail.Body = "<h1>Hello</h1>";
+                //    mail.IsBodyHtml = true;
+                //   // mail.Attachments.Add(new Attachment("C:\\file.zip"));
+
+                //    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                //    {
+                //        smtp.Credentials = new NetworkCredential("kamaleshs48@gmail.com", "7042771792k");
+                //        smtp.EnableSsl = true;
+                //        smtp.Send(mail);
+                //    }
+                //}
+
+
+
+                // return true;
+            }
+            catch (Exception ex)
+            {
+                var s = ex.ToString();
+                // return false;
+            }
+
         }
+
+
+        private static void SendEmailAsync(string MailBody, string toEmail, string MailSubject, string MailDisplayName, string FromEmail, string FromPassword)
+        {
+            // Plug in your email service here to send an email.
+            try
+            {
+                var client = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    Credentials = new NetworkCredential(FromEmail, FromPassword),
+
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    EnableSsl = true,
+                };
+                var @from = new MailAddress(FromEmail, MailDisplayName);
+                var to = new MailAddress(toEmail);
+                var mail = new MailMessage(@from, to)
+                {
+                    Subject = MailSubject,
+                    Body = "<div style='font-size:12pt;font-family:Times New Roman!important'>" + MailBody + "</div>",
+                    IsBodyHtml = true,
+                };
+
+                // Object state = mail;
+                mail.Priority = MailPriority.High;
+                client.Send(mail);
+
+            }
+            catch (Exception ex)
+            {
+
+                // _Error = ex.ToString();
+
+
+            }
+        }
+
 
         internal static object URLEncode(object p)
         {

@@ -8,7 +8,7 @@ using AISET.Repository.BL;
 using Microsoft.AspNet.Identity;
 using AISET.Controllers;
 using AISET.Repository.DL;
-
+using System.Data;
 namespace AISET.Controllers
 {
     public class HomeController : BaseController
@@ -20,6 +20,16 @@ namespace AISET.Controllers
         {
             return View();
         }
+
+        public ActionResult Syllabus()
+        {
+            return View();
+        }
+        public ActionResult FeeDetails()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult Step1()
         {
@@ -103,11 +113,12 @@ namespace AISET.Controllers
             if (Session["ModelValue"] != null)
             {
                 OldModels = (RegisterModels)Session["ModelValue"];
+
                 res = clsLoginBL.Step1(models);
             }
             else
             {
-
+                models.Password = CommanFunction.RandomPassword(6);
                 res = clsLoginBL.Register(models);
                 OldModels.FormID = res.UserID.ToString();
             }
@@ -119,7 +130,7 @@ namespace AISET.Controllers
             OldModels.LastName = models.LastName;
             OldModels.MobileNo = models.MobileNo;
             OldModels.Email = models.Email;
-
+            OldModels.Password = models.Password;
 
             Session["ModelValue"] = OldModels;
 
@@ -261,6 +272,35 @@ namespace AISET.Controllers
 
             TempData["RID"] = "AISET-" + DateTime.Now.ToString("ddMMyyyy") + models.FormID.ToString();
 
+
+
+            CommanFunction.GetDataSet("UPDATE tbl_StudentMaster SET Enrollment_No='" + TempData["RID"] + "' WHERE ID=" + models.FormID);
+
+            // Send Confirmation Email
+
+
+            string mailBody = "Dear <b>" + OldModels.FirstName + " " + OldModels.LastName + "</b>,<br /><br/>";
+            mailBody += "Congratulations! Your registration is confirmed!<br /><br />";
+            mailBody += "Your details are as below:<br />";
+            mailBody += "<b>Full name:</b> " + OldModels.FirstName + " " + models.LastName + "<br />";
+            mailBody += "<b>Enrollment No:</b> " + TempData["RID"] + "<br />";
+            mailBody += "<b>Email:</b> " + OldModels.Email + "<br />";
+            mailBody += "<b>Password:</b> " + OldModels.Password + "<br /><br />";
+            mailBody += "Please login to the service using this password. <br />";
+
+            mailBody += "Please <a href='" + this.HostName + "'>click here</a> to login into the " + AppSettingModel.ApplicationName + "." + "<br/><br/>";
+
+            IdentityMessage Message = new IdentityMessage();
+            Message.Subject = "Registration Confirmation on the " + AppSettingModel.ApplicationName + "";
+            Message.Body = mailBody + CommanFunction.GetEmailFooter();
+            Message.Destination = res.Email;
+
+            CommanFunction.SendEmailAsync(Message);
+
+
+
+
+
             Session["ModelValue"] = OldModels;
 
             return RedirectToAction("Confirmation", models);
@@ -372,7 +412,7 @@ namespace AISET.Controllers
                     mailBody += "<b>Email:</b> " + res.Email + "<br />";
                     mailBody += "<b>Password:</b> " + res.Password + "<br /><br />";
                     mailBody += "Please login to the service using this password. You will have to change your password when you first login. <br />";
-                    mailBody += "If you did not request to reset your password, please notify IGspectrum Support Team immediately.<br /><br />";
+                    mailBody += "If you did not request to reset your password, please notify AISET Support Team immediately.<br /><br />";
                     mailBody += "Please <a href='" + this.HostName + "'>click here</a> to login into the " + AppSettingModel.ApplicationName + "." + "<br/><br/>";
 
                     IdentityMessage Message = new IdentityMessage();
@@ -406,8 +446,8 @@ namespace AISET.Controllers
 
             List<SelectListItem> _List = new List<SelectListItem>();
 
-            _List.Add(new SelectListItem { Text = "A", Value = "A" });
-            _List.Add(new SelectListItem { Text = "B", Value = "B" });
+            _List.Add(new SelectListItem { Text = "City1", Value = "City1" });
+            _List.Add(new SelectListItem { Text = "City2", Value = "City2" });
 
 
             return Json(_List, JsonRequestBehavior.AllowGet);

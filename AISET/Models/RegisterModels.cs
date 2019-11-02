@@ -146,6 +146,7 @@ namespace AISET.Models
         public string Any_Other { get; set; }
         public string PaybalAmount { get; set; }
         public string PaymentStatus { get; set; }
+        public string Password { get; set; }
 
         public List<RegisterModels> _StudentList = new List<RegisterModels>();
 

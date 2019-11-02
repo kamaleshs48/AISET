@@ -176,12 +176,12 @@
 
 
                     <li >
-                        <a href="#"><i class="zmdi zmdi-view-list"></i>Syllabus</a>
+                        <a href="@Url.Action("Syllabus", "Home")"><i class="zmdi zmdi-view-list"></i>Syllabus</a>
                        
                     </li>
 
                     <li>
-                        <a href="#"><i class="fa fa-cubes" aria-hidden="true"></i>Fee Details</a>
+                        <a href="@Url.Action("FeeDetails", "Home")"><i class="fa fa-cubes" aria-hidden="true"></i>Fee Details</a>
                     </li>
 
                     <li >
@@ -200,9 +200,9 @@
                         <a href="@Url.Action("ForgotPassword", "Home")"><i class="fa fa-key" aria-hidden="true"></i>Forgot Password</a>
                     </li>
 
-                    <li>
+                    @*<li>
                         <a href="@Url.Action("ForgotRegistrationNo", "Home")"><i class="fa fa-circle-o" aria-hidden="true"></i>Forgot Registration No.</a>
-                    </li>
+                    </li>*@
 
 
                 </ul>

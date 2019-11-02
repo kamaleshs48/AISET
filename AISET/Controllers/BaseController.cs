@@ -8,8 +8,8 @@ namespace AISET.Controllers
 {
     public class BaseController : Controller
     {
-        public string ApplicationName = "";
-        public string HostName = "";
+        public string ApplicationName = "AISET";
+        public string HostName = "http://aiset.psofttech.com/";
         public BaseController()
         {
 
