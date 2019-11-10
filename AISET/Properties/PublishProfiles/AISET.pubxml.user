@@ -6,17 +6,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\Website\PublishedWebsites</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\AISETPublish</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
       <publishTime>06/10/2018 10:47:14</publishTime>
     </File>
     <File Include="bin/AISET.dll">
-      <publishTime>02/28/2019 13:44:39</publishTime>
+      <publishTime>11/02/2019 13:47:07</publishTime>
     </File>
     <File Include="bin/AISET.pdb">
-      <publishTime>02/28/2019 13:44:39</publishTime>
+      <publishTime>11/02/2019 13:47:07</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>02/22/2013 08:43:40</publishTime>
@@ -342,6 +342,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>06/10/2018 10:45:44</publishTime>
     </File>
+    <File Include="Images/Logo.png">
+      <publishTime>02/15/2019 04:26:38</publishTime>
+    </File>
     <File Include="packages.config">
       <publishTime>06/10/2018 21:52:22</publishTime>
     </File>
@@ -501,6 +504,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Account/_ExternalLoginsListPartial.cshtml">
       <publishTime>06/10/2018 10:46:36</publishTime>
     </File>
+    <File Include="Views/Admin/GenerateAdmitCard.cshtml">
+      <publishTime>10/30/2019 15:40:47</publishTime>
+    </File>
+    <File Include="Views/Admin/Index.cshtml">
+      <publishTime>10/30/2019 12:32:02</publishTime>
+    </File>
+    <File Include="Views/Admin/UpdateEditDate.cshtml">
+      <publishTime>10/30/2019 15:29:46</publishTime>
+    </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>06/10/2018 10:45:44</publishTime>
     </File>
@@ -514,10 +526,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2018 12:39:30</publishTime>
     </File>
     <File Include="Views/Home/DashBoard.cshtml">
-      <publishTime>02/28/2019 12:06:37</publishTime>
+      <publishTime>10/24/2019 06:30:52</publishTime>
+    </File>
+    <File Include="Views/Home/FeeDetails.cshtml">
+      <publishTime>02/11/2019 13:35:16</publishTime>
+    </File>
+    <File Include="Views/Home/ForgotPassword.cshtml">
+      <publishTime>10/30/2019 12:07:34</publishTime>
+    </File>
+    <File Include="Views/Home/ForgotRegistrationNo.cshtml">
+      <publishTime>10/30/2019 10:34:50</publishTime>
     </File>
     <File Include="Views/Home/Instructions.cshtml">
-      <publishTime>02/22/2019 00:36:28</publishTime>
+      <publishTime>10/24/2019 06:17:34</publishTime>
     </File>
     <File Include="Views/Home/Login.cshtml">
       <publishTime>10/13/2018 19:22:20</publishTime>
@@ -529,10 +550,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/28/2019 11:10:57</publishTime>
     </File>
     <File Include="Views/Home/Step2.cshtml">
-      <publishTime>02/28/2019 11:04:33</publishTime>
+      <publishTime>10/30/2019 18:08:55</publishTime>
     </File>
     <File Include="Views/Home/Step3.cshtml">
-      <publishTime>02/27/2019 05:21:50</publishTime>
+      <publishTime>11/02/2019 13:46:50</publishTime>
     </File>
     <File Include="Views/Home/Step4.cshtml">
       <publishTime>02/23/2019 12:03:17</publishTime>
@@ -542,6 +563,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Home/StepOld.cshtml">
       <publishTime>10/13/2018 16:35:12</publishTime>
+    </File>
+    <File Include="Views/Home/Syllabus.cshtml">
+      <publishTime>02/11/2019 13:35:36</publishTime>
     </File>
     <File Include="Views/Manage/AddPhoneNumber.cshtml">
       <publishTime>06/10/2018 10:46:38</publishTime>
@@ -570,14 +594,32 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>01/01/2019 19:59:08</publishTime>
     </File>
+    <File Include="Views/Shared/_LayoutAdmin.cshtml">
+      <publishTime>10/30/2019 15:42:53</publishTime>
+    </File>
     <File Include="Views/Shared/_LayoutHome.cshtml">
-      <publishTime>02/22/2019 00:39:22</publishTime>
+      <publishTime>10/30/2019 10:34:50</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutMain.cshtml">
-      <publishTime>02/28/2019 13:02:19</publishTime>
+      <publishTime>02/11/2019 13:36:19</publishTime>
+    </File>
+    <File Include="Views/Shared/_LayoutStudent.cshtml">
+      <publishTime>10/30/2019 18:04:11</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>06/10/2018 10:46:38</publishTime>
+    </File>
+    <File Include="Views/Student/AdmitCard.cshtml">
+      <publishTime>10/30/2019 12:40:05</publishTime>
+    </File>
+    <File Include="Views/Student/ChangePassword.cshtml">
+      <publishTime>02/11/2019 13:22:13</publishTime>
+    </File>
+    <File Include="Views/Student/ExamResults.cshtml">
+      <publishTime>10/30/2019 12:40:41</publishTime>
+    </File>
+    <File Include="Views/Student/Index.cshtml">
+      <publishTime>10/30/2019 17:28:48</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>06/10/2018 10:45:44</publishTime>
@@ -586,7 +628,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/10/2018 10:45:44</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/28/2019 13:44:41</publishTime>
+      <publishTime>02/11/2019 13:39:03</publishTime>
     </File>
   </ItemGroup>
 </Project>
