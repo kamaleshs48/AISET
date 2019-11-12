@@ -73,8 +73,8 @@ namespace AISET.Models
         public List<SelectListItem> ExamChoiceList = new List<SelectListItem>()
                {
 
-                new SelectListItem {Text="Open book",Value="1" },
-                new SelectListItem {Text="Target",Value="2" }
+                new SelectListItem {Text="Open Book",Value="1" },
+                new SelectListItem {Text="Target Scholarship Exam",Value="2" }
             };
 
         public string ExamCenter { get; set; }
