@@ -21,7 +21,7 @@
 
 <script>
 
-   
+
 
 
     var app = angular.module('MyApp', [])
@@ -92,8 +92,11 @@
             dataType: "json",
             data: data,
             success: function (d) {
+
                 $(".btnNext").show();
                 $(".btnp").hide();
+                alert('Your payment has been successfully processed.');
+                $("#btnNext").click();
             },
             error: function (xhr, textStatus, errorThrown) {
                 // TODO: Show error
@@ -101,9 +104,9 @@
         });
 
     }
-  
 
-  
+
+
 </script>
 
 <div class="panel panel-primary">
@@ -171,13 +174,13 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="button" value="Pay" class="btn btn-primary btnp"  onclick="OpenLink()" />
+                                        <input type="button" value="Pay" class="btn btn-primary btnp" onclick="OpenLink()" />
                                     </div>
 
                                 </div>
                             }
                             <a href="@Url.Action("Step2")" class="btn btn-primary">Previous</a>
-                            <input type="submit" name="Commond" value="Next" class="btn btn-primary btnNext" />
+                            <input type="submit" name="Commond" value="Next" class="btn btn-primary btnNext" id="btnNext" />
 
                         </div>
                     </div>
@@ -201,11 +204,11 @@
     //rzp_live_wMtvJzasOLmzMG   Live
 
         var options = {
-            "key": "rzp_live_wMtvJzasOLmzMG",
+            "key": "rzp_test_6ypgxndRBlvXHL",
             "amount": '@Model.PaybalAmount', // 2000 paise = INR 20//'@Model.PaybalAmount'
             "name": "AISET",
             "description": "Examination Fee",
-            "image": "http://aiset.in/wp-content/uploads/2018/12/The-scholarship-foundation-logo-2.png",
+            "image": "http://aiset.psofttech.com/images/logo.png",
             "handler": function (response) {
                 UpdatePaymentStatus(response.razorpay_payment_id)
                // alert('Payment Success')
@@ -213,7 +216,7 @@
             },
             "modal": {
                 "ondismiss": function () {
-                 //   alert('ondismiss')
+                  alert('Something went wrong. Please try again.')
                 }
             },
             "prefill": {
@@ -231,7 +234,7 @@
         rzp1.open();
         e.preventDefault();
     }
-  
+
 </script>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -243,5 +246,15 @@
 <script>
     $(document).ready(function () {
         $(".btnNext").hide();
+
+
+        setTimeout(function () {
+
+            if ('@Model.PaymentStatus' == 'Success') {
+                $(".btnNext").show();
+                $(".btnp").hide();
+            }
+        }, 200);
+
     });
 </script>

@@ -42,7 +42,7 @@ namespace AISET.Models
                  new SelectListItem { Text="PCM",Value="PCM" },
                  new SelectListItem { Text="PCB",Value="PCB" },
                   new SelectListItem { Text="Olympiad Ix-X Students",Value="Olympiad Ix-X Students" },
-                 
+
         };
         [Required(ErrorMessage = "Please Date Of Birth")]
 
@@ -139,9 +139,9 @@ namespace AISET.Models
         public string Photograph { get; set; }
         [Required]
         public string Signature { get; set; }
-        [Required]
+        //  [Required]
         public string Marksheet10 { get; set; }
-        [Required]
+        //  [Required]
         public string Marksheet12 { get; set; }
         public string Any_Other { get; set; }
         public string PaybalAmount { get; set; }

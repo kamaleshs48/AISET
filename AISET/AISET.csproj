@@ -292,6 +292,7 @@
     <Content Include="Content\fonts\Roboto\Roboto-Medium-webfont.woff" />
     <Content Include="Content\fonts\Roboto\Roboto-Regular-webfont.ttf" />
     <Content Include="Content\fonts\Roboto\roboto-regular-webfont.woff" />
+    <Content Include="Content\AISET-Syllabus-Medical.pdf" />
     <None Include="Properties\PublishProfiles\AICT.pubxml" />
     <None Include="Properties\PublishProfiles\AISET.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -392,6 +393,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="MembersDoc\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

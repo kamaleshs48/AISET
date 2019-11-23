@@ -24,7 +24,7 @@ namespace AISET.Repository.DL
         public static List<SelectListItem> GetStateList()
         {
 
-            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.Text, "Select * FROM tbl_StateMaster");
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.Text, "Select Name FROM tbl_StateMaster Group By Name Order By Name ");
 
             List<SelectListItem> models = new List<SelectListItem>();
 
@@ -71,6 +71,13 @@ namespace AISET.Repository.DL
         {
             return SqlHelper.ExecuteDataset(SqlHelper.ConnectionStr(), CommandType.Text, Qry);
         }
+
+        public static int ExecuteNonQuery(string Qry)
+        {
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnectionStr(), CommandType.Text, Qry);
+        }
+
+
         public static string GetResponse(string url)
         {
             try

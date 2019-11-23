@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using AISET.Controllers;
 using AISET.Repository.DL;
 using System.Data;
+using System.IO;
 namespace AISET.Controllers
 {
     public class HomeController : BaseController
@@ -205,7 +206,7 @@ namespace AISET.Controllers
 
         }
         [HttpPost]
-        public ActionResult Step4(string ID, string Commond, RegisterModels models)
+        public ActionResult Step4(string ID, string Commond, RegisterModels models, FormCollection frm)
         {
             RegisterModels OldModels = new RegisterModels();
             if (Session["ModelValue"] != null)
@@ -262,6 +263,59 @@ namespace AISET.Controllers
                 OldModels = (RegisterModels)Session["ModelValue"];
                 res = clsLoginBL.Step5(models);
             }
+            string _TempfileName = string.Empty;
+            string TempPath = string.Empty;
+            string Qry = "";
+            if (Photograph != null)
+            {
+                _TempfileName = Path.GetFileName(Photograph.FileName);
+                _TempfileName = OldModels.FormID + "_P" + Path.GetExtension(Photograph.FileName);
+                TempPath = Path.Combine(Server.MapPath("~/MembersDoc/"), _TempfileName);
+                Photograph.SaveAs(TempPath);
+                Qry = Qry + " UPDATE [tbl_StudentMaster] SET [PhotographDoc] ='" + _TempfileName + "' where ID= " + OldModels.FormID + ";";
+            }
+
+            if (Signature != null)
+            {
+                _TempfileName = Path.GetFileName(Signature.FileName);
+                _TempfileName = OldModels.FormID + "_S" + Path.GetExtension(Signature.FileName);
+                TempPath = Path.Combine(Server.MapPath("~/MembersDoc/"), _TempfileName);
+                Signature.SaveAs(TempPath);
+                Qry = Qry + " UPDATE [tbl_StudentMaster] SET [SignatureDoc] ='" + _TempfileName + "' where ID= " + OldModels.FormID + ";";
+            }
+            if (Marksheet10 != null)
+            {
+                _TempfileName = Path.GetFileName(Marksheet10.FileName);
+                _TempfileName = OldModels.FormID + "_M10" + Path.GetExtension(Marksheet10.FileName);
+                TempPath = Path.Combine(Server.MapPath("~/MembersDoc/"), _TempfileName);
+                Marksheet10.SaveAs(TempPath);
+                Qry = Qry + " UPDATE [tbl_StudentMaster] SET [Marksheet10Doc] ='" + _TempfileName + "' where ID= " + OldModels.FormID + ";";
+            }
+            if (Marksheet12 != null)
+            {
+                _TempfileName = Path.GetFileName(Marksheet12.FileName);
+                _TempfileName = OldModels.FormID + "_M12" + Path.GetExtension(Marksheet12.FileName);
+                TempPath = Path.Combine(Server.MapPath("~/MembersDoc/"), _TempfileName);
+                Marksheet12.SaveAs(TempPath);
+                Qry = Qry + " UPDATE [tbl_StudentMaster] SET [Marksheet12Doc] ='" + _TempfileName + "' where ID= " + OldModels.FormID + ";";
+            }
+
+            if (Any_Other != null)
+            {
+                _TempfileName = Path.GetFileName(Any_Other.FileName);
+                _TempfileName = OldModels.FormID + "_Any_Other" + Path.GetExtension(Any_Other.FileName);
+                TempPath = Path.Combine(Server.MapPath("~/MembersDoc/"), _TempfileName);
+                Any_Other.SaveAs(TempPath);
+                Qry = Qry + " UPDATE [tbl_StudentMaster] SET [AnyotherDoc] ='" + _TempfileName + "' where ID= " + OldModels.FormID + ";";
+                //  Qry = Qry + " UPDATE [tbl_Education] SET [10th] ='" + fileName + "',DocNo1='" + model.DocNo1 + "' where EmpID= " + model.ID + ";";
+            }
+
+
+            if (!string.IsNullOrEmpty(Qry))
+            {
+                CommanFunction.ExecuteNonQuery(Qry);
+            }
+
 
             OldModels.Photograph = models.Photograph;
             OldModels.Signature = models.Signature;
@@ -383,6 +437,14 @@ namespace AISET.Controllers
         {
 
             clsLoginBL.UpdatePayment(FID, PID);
+            RegisterModels OldModels = new RegisterModels();
+            if (Session["ModelValue"] != null)
+            {
+                OldModels = (RegisterModels)Session["ModelValue"];
+                OldModels.PaymentStatus = "Success";
+                Session["ModelValue"] = OldModels;
+            }
+
             return Json("Success", JsonRequestBehavior.AllowGet);
 
 
@@ -446,8 +508,18 @@ namespace AISET.Controllers
 
             List<SelectListItem> _List = new List<SelectListItem>();
 
-            _List.Add(new SelectListItem { Text = "City1", Value = "City1" });
-            _List.Add(new SelectListItem { Text = "City2", Value = "City2" });
+            DataSet ds = CommanFunction.GetDataSet("SELECT   [Districts] FROM [tbl_StateMaster] Where Name='" + StateName + "'");
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    _List.Add(new SelectListItem { Text = dr["Districts"].ToString(), Value = dr["Districts"].ToString() });
+                }
+            }
+
+
+            // _List.Add(new SelectListItem { Text = "City1", Value = "City1" });
+            // _List.Add(new SelectListItem { Text = "City2", Value = "City2" });
 
 
             return Json(_List, JsonRequestBehavior.AllowGet);
